@@ -1,0 +1,9 @@
+task = "train"
+input_data = "./telecom_churn.csv"
+features = ["AccountWeeks", "DataUsage", "DayMins", "DayCalls", "MonthlyCharge", "OverageFee", "RoamMins"]
+y_axis = "Churn"
+path = "/storage/models/test1.model"
+n_trees = 10
+min_samples_split = 5
+max_depth = 4
+x_features_fraction= 0.5

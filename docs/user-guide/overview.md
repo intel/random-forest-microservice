@@ -1,0 +1,31 @@
+# Name of Microservice
+
+## Overview
+
+The Optimized Random Forest Classifier: Training and Inference Microservice is a random forest classifier creation and inference tool designed to use new Intel-desigend optimization techniques to create smaller, faster, and still as accurate random forest models for classification and regression tasks.
+
+It is delivered as a flexible microservice, capable of being used either on its own through its RESTful HTTP API or integrated into a wider microservice-based system.
+
+## How It Works
+
+The microservice is designed as containerized API Server that manages an internal model training and inference service. The client communicates with the container using the API Server's RESTful HTTP API, and the API Server translates those requests into the appropriate commands to the model service.
+
+![An image of the basic architecture of the microservice](images/simple-arch.png)
+
+Inside the microservice is an the actual training and inference service. Below is a diagram showing the internal architecture of the microservice in training mode. 
+
+![An image of the internal architecture of the microservice](images/randomforest_odd.png)
+
+The service utilized an Intel-patented optimized data discretization algorithm to create a smaller, faster, and still nearly as accurate random forest model.
+
+![An image of the optimized data discretization algorithm](images/ODD_flowchart.png)
+
+## Licensing Information
+This repository is licensed under the MIT license [LICENSE](License.txt). This project also utilizes the Random Forest algorithm provided by SciKit Learn, which is licensed under the BSD 3-Clause License. Information on that algorithms license can be found at their repository [here](https://github.com/scikit-learn/scikit-learn/tree/main).
+
+## Learn More
+
+-   Get started with the microservice using the [Get Started
+    Guide](get-started-guide.md).
+-   Follow step-by-step examples to become familiar with the core
+    functionality of the microservice, in [Tutorials](tutorials.md).
