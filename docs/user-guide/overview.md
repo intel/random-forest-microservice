@@ -18,6 +18,16 @@ Inside the microservice is an the actual training and inference service. Below i
 
 The service utilized an Intel-patented optimized data discretization algorithm to create a smaller, faster, and still nearly as accurate random forest model.
 
+```
+Optimized Data Discretization Granted Patent No. 10,685,081, grant date 06/16/2020
+```
+Some aspects of this application also utilize pending patents: 
+```
+OPTIMIZED DECISION TREE MACHINE LEARNING FOR RESOURCE-CONSTRAINED DEVICES Patent filing # 16/902,063 filing date 6/15/2020
+
+MEMORY-EFFICIENT SYSTEM FOR DECISION TREE MACHINE LEARNING, Patent filed # 17/120,059 filing date 12/11/20
+```
+
 ![An image of the optimized data discretization algorithm](images/ODD_flowchart.png)
 
 ## Licensing Information
