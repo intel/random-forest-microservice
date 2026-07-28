@@ -193,7 +193,7 @@ func startTraining(c *gin.Context) {
 
 	// Read in our CSV file
 	features := training_body.Features
-	trainingtomlpath := generateTrainingTOML(dataset_path, new_model.Path, training_body.InferName, "train", features, training_body.MaxDepth, training_body.NTrees, training_body.SampleSplit, training_body.FeaturesFraction, training_body.DataSplit, training_body.ShowUnoptimzied)
+	trainingtomlpath := generateTrainingTOML(dataset_path, new_model.Path, training_body.InferName, "train", features, training_body.MaxDepth, training_body.NTrees, training_body.SampleSplit, training_body.FeaturesFraction, training_body.DataSplit, training_body.ShowUnoptimized)
 	channel_status := make(chan []byte)
 	go func() {
 		cmd := exec.Command("python", "../..//random_forest/main.py", trainingtomlpath)
@@ -358,7 +358,7 @@ func infer(c *gin.Context) {
 
 func generateTrainingTOML(filepath string, modelpath string, infername string, tasktype string, config []string, depth int, trees int, samplesplit int, fraction float64, datasplit float64, showunoptmizied bool) string {
 	path := "/storage/train.toml"
-	trainingToml := session.RandomForestTrainingConfig{TaskType: tasktype, FilePath: filepath, Features: config, InferenceName: infername, ModelPath: modelpath, NTrees: trees, SampleSplit: samplesplit, MaxDepth: depth, FeaturesFraction: fraction, DataSplit: datasplit, ShowUnoptimzied: showunoptmizied}
+	trainingToml := session.RandomForestTrainingConfig{TaskType: tasktype, FilePath: filepath, Features: config, InferenceName: infername, ModelPath: modelpath, NTrees: trees, SampleSplit: samplesplit, MaxDepth: depth, FeaturesFraction: fraction, DataSplit: datasplit, ShowUnoptimized: showunoptmizied}
 	buf := new(bytes.Buffer)
 	err := toml.NewEncoder(buf).Encode(trainingToml)
 	if err != nil {
