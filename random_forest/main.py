@@ -70,6 +70,10 @@ def inference(config, rf=None, splitdata=None):
         # load in model
         if rf == None:
             try:
+                # SECURITY WARNING: joblib.load uses pickle deserialization, which can execute
+                # arbitrary code if the model file is attacker-controlled. Before production use,
+                # replace this with a safe alternative (e.g., model signing/verification, or a
+                # non-pickle serialization format) and ensure only trusted model files are loaded.
                 rf = joblib.load(config["path"])
             except FileNotFoundError:
                 print("model not found, exiting...")
@@ -98,6 +102,8 @@ def inference(config, rf=None, splitdata=None):
 def show_trees(config, rf=None):
     if rf == None:
         try:
+            # SECURITY WARNING: See note in inference() — joblib.load is unsafe on
+            # attacker-controlled files. Replace before production use.
             rf = joblib.load(config["path"])
             rf.print_trees()
         except FileNotFoundError:

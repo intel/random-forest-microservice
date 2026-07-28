@@ -3,6 +3,24 @@ The Optimized Random Forest Classifier: Training and Inference Microservice is a
 
 The service is delivered as a flexible microservice, capable of being used either on its own through its RESTful HTTP API or integrated into a wider microservice-based system.
 
+## Security Considerations
+
+> **This is a reference implementation. The following known-unsafe patterns are intentional placeholders that a downstream integrator MUST address before any production or network-exposed deployment.**
+
+### 1. No Authentication or Authorization
+All HTTP routes (`/train`, `/infer`, `/model/upload`, `/data/upload`, etc.) are completely unauthenticated. Any network peer can invoke them without credentials. Integrators must add an authentication and authorization layer at the API gateway or within the service before exposure to any untrusted network.
+
+### 2. Unsafe Model Deserialization (Pickle RCE)
+`joblib.load()` — used to load `.model` files — is `pickle.load()` under the hood. A crafted pickle file can execute **arbitrary OS commands at load time** via `__reduce__`. Because `/model/upload` accepts arbitrary files with no validation and `/infer` loads whatever was uploaded, a network peer can achieve **unauthenticated remote code execution** by uploading a malicious model.
+
+Adding authentication alone does **not** fix this: even an authenticated user could upload a malicious file. Before production use, integrators must replace `joblib.load` with a safe alternative — for example:
+- Verify a cryptographic signature on every model file before loading it.
+- Use a non-pickle serialization format (e.g., ONNX, PMML) and a corresponding safe loader.
+- Validate the model file structure before deserialization.
+
+### 3. Container Runs as Root
+The container previously ran all processes as `root`. This has been corrected in this repository (a non-root `appuser` is now created and used), but integrators should verify their own derived images maintain this practice and further restrict container capabilities (e.g., `--cap-drop ALL`, read-only root filesystem) appropriate to their environment.
+
 ## Licensing Information
 This repository is licensed under the MIT [LICENSE](License.txt). This project also utilizes the Random Forest algorithm provided by SciKit Learn, which is licensed under the BSD 3-Clause License. Information on that algorithms license can be found at their repository [here](https://github.com/scikit-learn/scikit-learn/tree/main).
 
