@@ -66,7 +66,7 @@ type TrainingConfig struct {
 	MaxDepth         int      `toml:"max_depth"`
 	FeaturesFraction float64  `toml:"x_features_fraction"`
 	DataSplit        float64  `toml:"data_split"`
-	ShowUnoptimzied  bool     `toml:"show_unoptimized"`
+	ShowUnoptimized  bool     `toml:"show_unoptimized"`
 }
 
 type UploadConfig struct {
@@ -104,7 +104,7 @@ type RandomForestTrainingConfig struct {
 	MaxDepth         int      `toml:"max_depth"`
 	FeaturesFraction float64  `toml:"x_features_fraction"`
 	DataSplit        float64  `toml:"data_split"`
-	ShowUnoptimzied  bool     `toml:"show_unoptimized"`
+	ShowUnoptimized  bool     `toml:"show_unoptimized"`
 }
 
 func (self *Session) Setup(volumePath string) {

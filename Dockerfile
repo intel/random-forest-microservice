@@ -16,7 +16,7 @@ RUN make install_deps
 COPY ./oddforest-microservice ./oddforest-microservice
 # Build API Server
 WORKDIR /app/oddforest-microservice/src
-RUN GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o ../../bin/oddforest_server.run main.go
+RUN GOOS=linux GOARCH=amd64 go build -trimpath -mod=readonly -gcflags="all=-spectre=index -N -l" -ldflags="all=-s -w" -o ../../bin/oddforest_server.run main.go
 # Run as non-root user to limit blast radius of container escape or RCE
 RUN useradd --no-create-home --shell /bin/false appuser
 USER appuser

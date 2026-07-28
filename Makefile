@@ -28,9 +28,9 @@ else
 endif
 
 install_deps:
-	@printf "${LIGHTPURPLE}Installing Go 1.23.3 64-bit...${RESET}\n"
-	wget https://golang.org/dl/go1.23.3.linux-amd64.tar.gz
-	tar -C /usr/local -xzf go1.23.3.linux-amd64.tar.gz
+	@printf "${LIGHTPURPLE}Installing Go 1.26.5 64-bit...${RESET}\n"
+	wget https://go.dev/dl/go1.26.5.linux-amd64.tar.gz
+	tar -C /usr/local -xzf go1.26.5.linux-amd64.tar.gz
 	@echo "export PATH=$$PATH:/usr/local/go/bin" >> ~/.bashrc
 	exec $$SHELL
 
@@ -39,7 +39,7 @@ build_linux: start_build clean
 ifeq ($(arch),x86_64)
 	@printf "\t${PURPLE}Building for Linux 64-bit...${RESET}\n"
 	cd oddforest-microservice/src; \
-	GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o ../../bin/oddforest_server.run main.go
+	GOOS=linux GOARCH=amd64 go build -trimpath -mod=readonly -gcflags="all=-spectre=index -N -l" -ldflags="all=-s -w" -o ../../bin/oddforest_server.run main.go
 
 	@printf "\t${GREEN}Linux 64 build completed.${RESET}\n"
 endif
